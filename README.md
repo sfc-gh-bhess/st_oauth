@@ -1,5 +1,4 @@
-# st_oauth
-OAuth component for Streamlit
+# OAuth component for Streamlit
 
 This Python package implements a "gate" for the Streamlit app
 that will only allow the app to proceed once the user authenticates
@@ -8,12 +7,17 @@ via OAuth to a configured OAuth provider.
 Simply include the component at the top of the Streamlit app, such as
 ```
 import streamlit as st
-import st_oauth
+from st_oauth import st_oauth
 
 st.markdown("## This (and above) is always seen")
 id = st.oauth()
 st.markdown("## This (and below) is only seen after authentication")
 ```
+
+The token is stored in Streamlit session state and is validated
+on each re-run of the Streamlit. If the token is expired, it is cleared
+from the session state and the user is prompted to reauthenticate. There
+is also an option to logout (a logout button is placed in the sidebar).
 
 ## Installation 
 
@@ -75,7 +79,7 @@ id = st_oauth('my_oauth')
 
 The `.streamlit/secrets.toml` file would look something like this:
 ```
-[oauth]
+[my_oauth]
 authorization_endpoint = "<OAUTH AUTH ENDPOINT usually ending in /v1/authorize>"
 ...
 ```
@@ -86,3 +90,7 @@ parameter values.
 oauth_params = {'authorization_enddpoint': ...} # Or any way to create the dictionary
 id = st_oauth(oauth_params)
 ```
+
+## Configuring your OAuth provider
+Consult the documentation for your OAuth provider on how to create a new
+application integration for `st_oauth`.
