@@ -29,7 +29,7 @@ Note that python 3.8 is the only supported python version currently.
 
 To install directly from github via pipenv, use:
 ```
-pipenv install git+https://github.com/sfc-gh-bhess/st_oauth.git#egg=st_connection
+pipenv install git+https://github.com/sfc-gh-bhess/st_oauth.git#egg=st_oauth
 ```
 
 ## Description
