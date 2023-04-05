@@ -106,3 +106,11 @@ Streamlit app.
 ## Configuring your OAuth provider
 Consult the documentation for your OAuth provider on how to create a new
 application integration for `st_oauth`.
+
+### Lower-level notes
+If you do need to test to see if the session is already cached,
+you can test it yourself directly:
+```
+if st_oauth._STKEY in st.session_state:
+    do_something()
+```
