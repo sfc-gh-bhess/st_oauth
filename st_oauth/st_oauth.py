@@ -37,14 +37,14 @@ def validate_config(config):
                                 'identity_field_in_token' ]
     return all([k in config for k in required_config_options])
 
-def show_auth_link(config):
+def show_auth_link(config, label):
     state_parameter = string_num_generator(15)
     query_params = urlencode({'redirect_uri': config['redirect_uri'], 'client_id': config['client_id'], 'response_type': 'code', 'state': state_parameter, 'scope': config['scope']})
     request_url = f"{config['authorization_endpoint']}?{query_params}"
     if st.experimental_get_query_params():
         qpcache = qparms_cache(state_parameter)
         qpcache = st.experimental_get_query_params()
-    st.markdown(f'<a href="{request_url}" target="_self">Login via OAuth</a>', unsafe_allow_html=True)
+    st.markdown(f'<a href="{request_url}" target="_self">{label}</a>', unsafe_allow_html=True)
     st.stop()
     
 def validate_token(token, config):
@@ -57,7 +57,7 @@ def validate_token(token, config):
         return False, 'Invalid'
     return True, data[config['identity_field_in_token']] if config['identity_field_in_token'] in data else 'OK'
 
-def st_oauth(config=None):
+def st_oauth(config=None, label="Login via OAuth"):
     if not config:
         config = _DEFAULT_SECKEY
     if isinstance(config, str):
@@ -73,7 +73,7 @@ def st_oauth(config=None):
             st.error("Invalid OAuth Configuration")
             st.stop()
         if 'code' not in st.experimental_get_query_params():
-            show_auth_link(config)
+            show_auth_link(config, label)
         code = st.experimental_get_query_params()['code'][0]
         state = st.experimental_get_query_params()['state'][0]
         qpcache = qparms_cache(state)
@@ -97,14 +97,14 @@ def st_oauth(config=None):
             ret.raise_for_status()
         except requests.exceptions.RequestException as e:
             st.error(e)
-            show_auth_link(config)
+            show_auth_link(config, label)
         token = ret.json()
         valid, msg = validate_token(token, config)
         if valid:
             st.session_state[_STKEY] = token
         else:
             st.error("Invalid OAuth Token")
-            show_auth_link(config)
+            show_auth_link(config, label)
 
     if _STKEY in st.session_state:
         st.sidebar.button("Logout", on_click=logout)

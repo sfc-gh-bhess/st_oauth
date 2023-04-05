@@ -39,7 +39,11 @@ continue until the user authenticates via OAuth. The call to `st_oauth()`
 will return the value in the OAuth token that contains the identity
 (`sub` or `upn`, as configured).
 
-The `st_oauth()` function needs a configuration dictionary to function.
+The `st_oauth()` function takes 2 optional parameters: `config` and `label`.
+The `label` is the text to use in the link presented to log in. By default, 
+the label is `Login via OAuth`.
+
+The `st_oauth()` function also needs a configuration dictionary to function.
 The necessary fields of the function are:
 * `authorization_endpoint` - the URL to use to get an authorization code
 * `token_endpoint` - the URL to use to trade an authorization code for a token
@@ -51,8 +55,9 @@ The necessary fields of the function are:
 * `audience` - the audience as configured in the OAuth provider
 * `identity_field_in_token` - which field in the returned token that contains the identity (usually it is `sub` or `upn`). This is the field that will be returned from the `st_oauth()` call.
 
-If `st_oauth()` is called without any arguments, it will look for the configuration
-parameters in the secrets file (`st.secrets`) using the default name `oauth`.
+If `st_oauth()` is called without a `config` parameter, it will look for the 
+configuration parameters in the secrets file (`st.secrets`) using the default
+name `oauth`.
 ```
 id = st_oauth()
 ```
@@ -71,7 +76,7 @@ audience = "<OAUTH AUDIENCE>"
 identity_field_in_token = "<OAUTH TOKEN ID FIELD - sub or upn>"
 ```
 
-If `st_oauth()` is called with a string valued argument, it will look for the
+If `st_oauth()` is called with a string valued `config` parameter, it will look for the
 configuration parameters in the secrets file (`st.secrets`) using the supplied name.
 ```
 id = st_oauth('my_oauth')
@@ -84,8 +89,8 @@ authorization_endpoint = "<OAUTH AUTH ENDPOINT usually ending in /v1/authorize>"
 ...
 ```
 
-If `st_oauth()` is called with a dictionary argument, it will use those as the
-parameter values.
+If `st_oauth()` is called with a dictionary for the `config` parameter,
+it will use those as the parameter values.
 ```
 oauth_params = {'authorization_enddpoint': ...} # Or any way to create the dictionary
 id = st_oauth(oauth_params)
