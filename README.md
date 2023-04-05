@@ -96,6 +96,13 @@ oauth_params = {'authorization_enddpoint': ...} # Or any way to create the dicti
 id = st_oauth(oauth_params)
 ```
 
+### Multipage Streamlit Apps
+This component supports multipage Streamlit apps. Just include
+the call to `snowauth_session()` at the top of every page. If 
+the user is not logged in, they will be presented with the login
+link. Once authenticated, they will return to the main page of the
+Streamlit app.
+
 ## Configuring your OAuth provider
 Consult the documentation for your OAuth provider on how to create a new
 application integration for `st_oauth`.
