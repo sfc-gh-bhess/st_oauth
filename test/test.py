@@ -1,7 +1,7 @@
-from pathlib import Path
-import sys
-path_root = Path(__file__).parents[1]
-sys.path.append(str(path_root))
+from pathlib import Path                # Needed
+import sys                              # just
+path_root = Path(__file__).parents[1]   # for
+sys.path.append(str(path_root))         # tests
 
 import streamlit as st
 from st_oauth import st_oauth
