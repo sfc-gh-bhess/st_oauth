@@ -32,9 +32,7 @@ def validate_config(config):
                                 'redirect_uri',
                                 'client_id',
                                 'client_secret',
-                                'scope',
-                                'audience',
-                                'identity_field_in_token' ]
+                                'scope' ]
     return all([k in config for k in required_config_options])
 
 def show_auth_link(config, label):
@@ -50,12 +48,12 @@ def show_auth_link(config, label):
 def validate_token(token, config):
     signing_key = jwks_client(config['jwks_uri']).get_signing_key_from_jwt(token['access_token'])
     try:
-        data = jwt.decode(token['access_token'], signing_key.key, algorithms=["RS256"], audience=config['audience'])
+        data = jwt.decode(token['access_token'], signing_key.key, algorithms=["RS256"], audience=config['audience'] if 'audience' in config else None)
     except (jwt.exceptions.ExpiredSignatureError):
         return False, 'Expired'
     except:
         return False, 'Invalid'
-    return True, data[config['identity_field_in_token']] if config['identity_field_in_token'] in data else 'OK'
+    return True, data[config['identity_field_in_token']] if 'identity_field_in_token' in config and config['identity_field_in_token'] in data else 'OK'
 
 def st_oauth(config=None, label="Login via OAuth"):
     if not config:
