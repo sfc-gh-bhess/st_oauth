@@ -52,8 +52,8 @@ The necessary fields of the function are:
 * `client_id` - the client ID, as configured in the OAuth provider
 * `client_secret` - the client secret for the client ID, as configured in the OAuth provider
 * `scope` - the OAuth scope to use, as configured in the OAuth provider
-* `audience` - the audience as configured in the OAuth provider
-* `identity_field_in_token` - which field in the returned token that contains the identity (usually it is `sub` or `upn`). This is the field that will be returned from the `st_oauth()` call.
+* `audience` - (optional) the audience as configured in the OAuth provider
+* `identity_field_in_token` -  (optional) which field in the returned token that contains the identity (usually it is `sub` or `upn`). This is the field that will be returned from the `st_oauth()` call. If unset or not found in the token, `OK` will be returned.
 
 If `st_oauth()` is called without a `config` parameter, it will look for the 
 configuration parameters in the secrets file (`st.secrets`) using the default
