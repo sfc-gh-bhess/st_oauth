@@ -113,7 +113,7 @@ identity_field_in_token = "sub"
 
 ### Multipage Streamlit Apps
 This component supports multipage Streamlit apps. Just include
-the call to `snowauth_session()` at the top of every page. If 
+the call to `st_oauth()` at the top of every page. If 
 the user is not logged in, they will be presented with the login
 link. Once authenticated, they will return to the main page of the
 Streamlit app.
@@ -129,4 +129,3 @@ you can test it yourself directly:
 if st_oauth._STKEY in st.session_state:
     do_something()
 ```
-
