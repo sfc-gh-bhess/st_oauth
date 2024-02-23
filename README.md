@@ -96,6 +96,21 @@ oauth_params = {'authorization_enddpoint': ...} # Or any way to create the dicti
 id = st_oauth(oauth_params)
 ```
 
+A sample configuration with Google OAuth looks like this
+
+```
+[oauth]
+authorization_endpoint = "https://accounts.google.com/o/oauth2/auth"
+token_endpoint = "https://oauth2.googleapis.com/token"
+jwks_uri = "https://www.googleapis.com/oauth2/v3/certs"
+redirect_uri = "http://localhost:8501"
+client_id = "<GOOGLE_PROJECT_CLIENT_ID>"
+client_secret = "<GOOGLE_PROJECT_CLIENT_SECRET>"
+scope = "email profile"
+audience = "<GOOGLE_PROJECT_CLIENT_ID>"
+identity_field_in_token = "sub"
+```
+
 ### Multipage Streamlit Apps
 This component supports multipage Streamlit apps. Just include
 the call to `st_oauth()` at the top of every page. If 
