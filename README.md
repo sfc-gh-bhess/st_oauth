@@ -54,6 +54,7 @@ The necessary fields of the function are:
 * `scope` - the OAuth scope to use, as configured in the OAuth provider
 * `audience` - (optional) the audience as configured in the OAuth provider
 * `identity_field_in_token` -  (optional) which field in the returned token that contains the identity (usually it is `sub` or `upn`). This is the field that will be returned from the `st_oauth()` call. If unset or not found in the token, `OK` will be returned.
+* `leeway` - (optional) in seconds to account for clock skew 
 
 If `st_oauth()` is called without a `config` parameter, it will look for the 
 configuration parameters in the secrets file (`st.secrets`) using the default
@@ -73,6 +74,7 @@ client_id = "<OAUTH CLIENT ID>"
 client_secret = "<OAUTH CLIENT SECRET>"
 scope = "<OAUTH SCOPE>"
 audience = "<OAUTH AUDIENCE>"
+leeway = "<JWT DECODE SECONDS LEEWAY>"
 identity_field_in_token = "<OAUTH TOKEN ID FIELD - sub or upn>"
 ```
 
