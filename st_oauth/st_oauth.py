@@ -46,9 +46,9 @@ def show_auth_link(config, label):
     st.stop()
     
 def validate_token(token, config):
-    signing_key = jwks_client(config['jwks_uri']).get_signing_key_from_jwt(token['access_token'])
+    signing_key = jwks_client(config['jwks_uri']).get_signing_key_from_jwt(token['id_token'])
     try:
-        data = jwt.decode(token['access_token'], signing_key.key, algorithms=["RS256"], audience=config['audience'] if 'audience' in config else None)
+        data = jwt.decode(token['id_token'], signing_key.key, algorithms=["RS256"], audience=config['audience'] if 'audience' in config else None)
     except (jwt.exceptions.ExpiredSignatureError):
         return False, 'Expired'
     except:
